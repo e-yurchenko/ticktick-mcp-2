@@ -5,10 +5,6 @@ ENV PYTHONUNBUFFERED=1 \
     DOTENV_DIR=/home/ticktick/.config/ticktick-mcp \
     HOME=/home/ticktick
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends git \
-    && rm -rf /var/lib/apt/lists/*
-
 RUN adduser --disabled-password --gecos "" ticktick
 
 WORKDIR /app
@@ -16,9 +12,13 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 COPY src ./src
 
-RUN pip install --upgrade pip setuptools wheel
-RUN pip install --no-cache-dir git+https://github.com/jen6/ticktick-py.git@ae11d15cab230ad70983ceaa970c4e952f1be918
-RUN pip install --no-cache-dir .
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git build-essential \
+    && pip install --upgrade pip setuptools wheel \
+    && pip install --no-cache-dir git+https://github.com/jen6/ticktick-py.git@ae11d15cab230ad70983ceaa970c4e952f1be918 \
+    && pip install --no-cache-dir . \
+    && apt-get purge -y --auto-remove git build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
