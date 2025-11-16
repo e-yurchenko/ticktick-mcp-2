@@ -12,6 +12,9 @@ kill_timeout = 5
   handlers = ["http"]
   force_https = true
 
+  [[services.ports]]
+    port = 8080
+
   [[services.http_checks]]
     path = "/.well-known/mcp"
     method = "get"
