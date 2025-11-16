@@ -25,7 +25,7 @@ logging.info("Tool registration complete.")
 
 # --- Main Execution Logic --- #
 def main():
-    mcp.run(transport="stdio")
+    mcp.run(transport="streamable-http")
 
 # --- Script Entry Point --- #
 if __name__ == "__main__":

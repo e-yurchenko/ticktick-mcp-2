@@ -3,7 +3,12 @@ FROM python:3.12-slim
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     DOTENV_DIR=/home/ticktick/.config/ticktick-mcp \
-    HOME=/home/ticktick
+    HOME=/home/ticktick \
+    FASTMCP_HOST=0.0.0.0 \
+    FASTMCP_PORT=8080 \
+    FASTMCP_LOG_LEVEL=INFO
+
+EXPOSE 8080
 
 RUN adduser --disabled-password --gecos "" ticktick
 
